@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <select name="" id="selectsort">
+        <option value="low">Low</option>
+        <option value="high">High</option>
+        <option value="az">A-Z</option>
+        <option value="za">Z-A</option>
+    </select>
+    <div id="main"></div>
+    <div id="cart"></div>
+</body>
+</html>
+
+<script>
+
+let data = [
+    {
+        id : 1,
+        title : "A - series Smart Watch",
+        price : 1000,
+        image : "https://rukminim2.flixcart.com/image/612/612/xif0q/smartwatch/p/f/d/-original-imagxp8umugr9z35.jpeg?q=70",
+    },
+
+
+    {
+        id : 2,
+        title : "M - series Smart Watch",
+        price :1500,
+        image : "https://rukminim2.flixcart.com/image/612/612/xif0q/smartwatch/9/6/s/-original-imahf5ngwjefzhdg.jpeg?q=70",
+    },
+
+    {
+        id : 3,
+        title : "S - series Smart Watch",
+        price : 2000,
+        image : "https://rukminim2.flixcart.com/image/612/612/xif0q/smartwatch/s/5/2/-original-imagxp8vaggyddju.jpeg?q=70",
+    },
+
+    {
+        id : 4,
+        title : "F - series Smart Watch",
+        price : 2500,
+        image : "https://rukminim2.flixcart.com/image/612/612/xif0q/smartwatch/3/t/n/-original-imagtdqkvrkrq6s8.jpeg?q=70",
+    },
+]
+
+let cartbtn = document.createElement("button")
+cartbtn.innerHTML = "CART"
+document.getElementById("cart").append(cartbtn)
+cartbtn.addEventListener("click",function(){
+    window.open("cart.html")
+})
+
+cartbtn.setAttribute("class","btnadd")
+
+
+
+
+
+
+
+function display (data){
+    data.map((el,i)=>{
+        let box = document.createElement("div")
+        box.setAttribute("class","i-box")
+
+        let heading = document.createElement("h1")
+        heading.innerHTML = el.title
+        heading.setAttribute("class","til")
+
+        let price = document.createElement("p")
+        price.innerHTML = el.price
+        price.setAttribute("class","p1")
+
+        let pic = document.createElement("img")
+        pic.setAttribute("src",el.image)
+        pic.setAttribute("class","imging")
+
+        let btn = document.createElement("button")
+        btn.innerHTML="add to cart"
+        btn.setAttribute("class","btn1")
+        btn.addEventListener("click",function(){
+            addTocart(data,i)
+        })
+
+        box.append(heading,price,pic,btn)
+
+        document.getElementById("main").append(box)
+    })
+}
+display(data)
+
+
+let sortsele = document.getElementById("selectsort")
+sortsele.addEventListener("change",function(){
+    document.getElementById("main").innerHTML=""
+    let selectedvalue = sortsele.value
+    let selectArr = []
+
+    if(selectedvalue === "low"){
+        selectArr = data.sort((a,b)=>a.price - b.price)
+    }else if(selectedvalue === "high"){
+        selectArr = data.sort((a,b)=>b.price - a.price)
+    }else if(selectedvalue === "az"){
+        selectArr = data.sort((a,b)=>a.title.localeCompare(b.title))
+    }else if(selectedvalue === "za"){
+        selectArr = data.sort((a,b)=>b.title.localeCompare(a.title))
+    }
+    display(selectArr)
+})
+
+
+
+
+function addTocart(data,index){
+    let product=data[index]
+    let products =JSON.parse(localStorage.getItem("cart")) || []
+    let existingpr=products.findIndex(p=> p.id == product.id)
+    if(existingpr != -1){
+        products[existingpr].quamtity += 1
+    }else{
+        products.push(product)
+        product.quamtity=1
+    }
+    localStorage.setItem("cart",JSON.stringify(products))
+}
+</script>

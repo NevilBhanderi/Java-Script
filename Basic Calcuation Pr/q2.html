@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Interest Calculator</title>
+</head>
+<body>
+    <h1>Value</h1>
+    <input type="text" id="a1">
+
+    <h1>Interest</h1>
+    <input type="text" id="a3">
+
+    <h1>Month</h1>
+    <input type="text" id="a2">
+
+    <h1 id="ans">Total Interest: 0</h1>
+    
+    <button onclick="calculateInterest()">Calculate</button>
+
+    <script>
+        function calculateInterest() {
+            let a = document.getElementById("a1").value;
+            let b = document.getElementById("a2").value;
+            let c = document.getElementById("a3").value;
+
+            // Ensure the values are numbers
+            let total = (+a * +b * +c) / 100;
+
+            document.getElementById("ans").innerHTML = "Total Interest: " + total;
+        }
+    </script>
+
+</body>
+</html>

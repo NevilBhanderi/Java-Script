@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Salary</h1>
+    <input type="text" name="" id="a1">
+
+    <h1>PF</h1>
+    <input type="text" name="" id="a2">
+
+    <h1>Income Tax</h1>
+    <input type="text" id="a3">
+
+    <h1>Bonus</h1>
+    <input type="text" name="" id="a4">
+
+    <h1 id="Total"></h1>
+
+    <button onclick="cal ()">submit</button>
+</body>
+</html>
+
+<script>
+    function cal () {
+        let a1 = document.getElementById("a1").value
+     let a2 = document.getElementById("a2").value
+     let a3 = document.getElementById("a3").value
+     let a4 = document.getElementById("a4").value
+
+     total = +a1 + +a2 - +a3 + +a4
+
+     document.getElementById("Total").innerHTML = total
+    }
+</script>

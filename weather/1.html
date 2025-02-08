@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://png.pngtree.com/element_our/20190528/ourmid/pngtree-weather-icon-image_1175001.jpg">
+    <title>Weather Fetcher</title>
+</head>
+<body>
+    <center>
+        <h1>Search Weather</h1><br>
+        <input type="text" placeholder="Enter City Name" id="city">
+        <button onclick="fetchingWeatherData()">Search</button>
+        <div id="main" style="text-align: center;"></div>
+    </center>
+    <script>
+        function fetchingWeatherData() {
+            const api_key = "2a778aaea95e48e27e3e57c370e98eeb"; 
+            let city = document.getElementById("city").value;
+
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}&units=metric`)
+                .then(function(res) {
+                    return res.json();
+                })
+                .then(function(json) {
+                    console.log(json);
+                    displayWeatherData(json);
+                })
+                .catch(function(err) {
+                    console.log(err);
+                });
+        }
+
+        function displayWeatherData(json) {
+            document.getElementById("main").innerHTML = "";
+            if (json.cod === 200) {
+                let div = document.createElement("div");
+
+                let cityName = document.createElement("h1");
+                cityName.innerHTML = `City: ${json.name}`;
+
+                let temperature = document.createElement("p");
+                temperature.innerHTML = `Temperature: ${json.main.temp}°C`;
+
+                let minTemp = document.createElement("p");
+                minTemp.innerHTML = `Min Temperature: ${json.main.temp_min}°C`;
+
+                let maxTemp = document.createElement("p");
+                maxTemp.innerHTML = `Max Temperature: ${json.main.temp_max}°C`;
+
+                let wind = document.createElement("p");
+                wind.innerHTML = `Wind Speed: ${json.wind.speed} m/s`;
+
+                let clouds = document.createElement("p");
+                clouds.innerHTML = `Clouds: ${json.clouds.all}%`;
+
+                let sunrise = document.createElement("p");
+                sunrise.innerHTML = `Sunrise: ${new Date(json.sys.sunrise * 1000).toLocaleTimeString()}`;
+
+                let sunset = document.createElement("p");
+                sunset.innerHTML = `Sunset: ${new Date(json.sys.sunset * 1000).toLocaleTimeString()}`;
+
+                div.appendChild(cityName);
+                div.appendChild(temperature);
+                div.appendChild(minTemp);
+                div.appendChild(maxTemp);
+                div.appendChild(wind);
+                div.appendChild(clouds);
+                div.appendChild(sunrise);
+                div.appendChild(sunset);
+                document.getElementById("main").appendChild(div);
+            } else {
+                document.getElementById("main").innerHTML = `<p>City not found!</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

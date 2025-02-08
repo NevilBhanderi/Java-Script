@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Form Validation</title>
+    <style>
+        .error {
+            color: red;
+        }
+        #err {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<center>
+    <h2>Registration Form</h2>
+
+    <form id="signup">
+
+        <label for="name">Enter Name:</label>
+        <input type="text" id="name">
+        <br><br>
+
+        <label for="email">Enter Email:</label>
+        <input type="text" id="email">
+        <br><br>
+
+        <label for="password">Enter Password:</label>
+        <input type="password" id="password">
+        <br><br>
+
+        <label for="cpa">Enter Confirm Password:</label>
+        <input type="password" id="cpa">
+        <br><br>
+
+        <label for="hobby">Hobby:</label>
+        <input type="text" id="hobby">
+        <br><br>
+
+        <label for="dob">Date of Birth:</label><br>
+        <input type="date" id="dob">
+        <br><br>
+
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female
+        <br><br>
+
+        <input type="submit" value="Register">
+        <br><br>
+
+        <span id="err"></span>
+
+    </form>
+</center>
+
+<script>
+    document.getElementById("signup").onsubmit = function(event){
+        event.preventDefault();
+        document.getElementById("err").innerHTML = "";
+
+        try {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let pw = document.getElementById("password").value;
+            let cps = document.getElementById("cpa").value;
+            let hobby = document.getElementById("hobby").value.trim();
+            let dob = document.getElementById("dob").value;
+
+            // Get selected gender
+            let gender = document.querySelector('input[name="gender"]:checked');
+
+            if (!/^[a-zA-Z0-9_\s]+$/.test(name)) {
+                throw new Error("Invalid Name!");
+            }
+            if (!/^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+                throw new Error("Invalid Email!");
+            }
+            if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(pw)) {
+                throw new Error("Invalid Password! Must contain at least 8 characters, including uppercase, lowercase, and a number.");
+            }
+            if (pw !== cps) {
+                throw new Error("Passwords do not match!");
+            }
+            if (hobby === "") {
+                throw new Error("Please Enter Your Hobbies!");
+            }
+            if (!gender) {
+                throw new Error("Please Select Gender!");
+            }
+            if (dob === "") {
+                throw new Error("Please enter your date of birth.");
+            }
+
+            alert("Registration Successful!");
+        } catch (err) {
+            document.getElementById("err").innerHTML = err.message;
+        }
+    }
+</script>
+
+</body>
+</html>
